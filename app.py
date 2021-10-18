@@ -1,9 +1,8 @@
-from datetime import datetime
+import os
 from telegram import update
+from dotenv import load_dotenv
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import requests
-from telegram.utils.request import Request
-
 
 #mybot = Updater("2039097737:AAEVO2f5St1OS3q0BuE0e4iEEnmp4wTblzY", use_context=True)
 
@@ -19,6 +18,13 @@ def greet_user(update, context):
     update.message.reply_text("Здравствуй, пользователь!")  
 
 def check_connectin(update, context):
+    # url = 'https://b02a-84-253-126-202.ngrok.io'
+    # files = {'prototype.xlsx': open('prototype.xlsx')}
+
+    # r = requests.post(url, files=files)
+
+    # print(r)
+
     print("Отправляем запрос во Falsk")
     resp = requests.post(url='https://1201-84-253-126-202.ngrok.io')
     print(resp.text)
@@ -31,7 +37,8 @@ def talk_to_me(update, context):
     update.message.reply_text(user_text)
 
 def main():
-    mybot = Updater("2039097737:AAEVO2f5St1OS3q0BuE0e4iEEnmp4wTblzY", use_context=True)
+    token = os.getenv("API_KEY")
+    mybot = Updater(token, use_context=True)
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("Learn", greet_user))
     dp.add_handler(CommandHandler("Check", check_connectin))
@@ -43,4 +50,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
+    load_dotenv()
