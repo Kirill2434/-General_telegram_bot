@@ -2,7 +2,6 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
 from class_ofd import OfdClient
 from datetime import datetime
-from telegram import ReplyKeyboardMarkupp
 import settings
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)

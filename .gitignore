@@ -131,3 +131,5 @@ settings.py
 pip
 parsnew.py
 .idea/
+settings.py
+requirements.txt
