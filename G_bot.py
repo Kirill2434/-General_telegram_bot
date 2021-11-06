@@ -19,13 +19,13 @@ def greet_user(update, context):
 
 def start_registration(update, context):
     user_talk = update.message.text
-    if user_talk == 'Да':
+    if user_talk == 'Да' or user_talk == 'да':
         update.message.reply_text('Введите регистрационный номер')
         return 'get_reg_number'
-    elif user_talk == 'Нет':
+    elif user_talk == 'Нет' or user_talk == 'нет':
         update.message.reply_text('Минус премия, другалик')
         return cancel_handler(update, context)
-    update.message.reply_text('Необходимо ввести "да" или "нет"!')
+    update.message.reply_text('Необходимо ввести "Да" или "Нет"!')
     return 'start_registration'
 
 
@@ -56,7 +56,13 @@ def registrate_activate(update, context):
         code_activate=context.user_data.get('activation_code')
     )
     print(result_activation)
-    update.message.reply_text(result_activation.get('to'))
+    date_activation = result_activation.get('to')
+    if date_activation is None:
+        update.message.reply_text(result_activation.get('message'))
+    else:
+        date_activation_to = datetime.fromtimestamp(date_activation // 1000)
+        update.message.reply_text(date_activation_to.strftime("%m/%d/%Y"))
+        print(date_activation_to.strftime("%d/%m/%Y"))
     return cancel_handler(update, context)
 
 
