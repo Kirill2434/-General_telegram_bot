@@ -1,5 +1,3 @@
-
-from datetime import datetime
 import requests
 import settings
 
@@ -25,7 +23,8 @@ class OfdClient:
         )
         self.token = result.json()['authToken']
 
-    def get_activation_headers(self, token=None):
+    @staticmethod
+    def get_activation_headers(token=None):
         headers = {'Content-Type': 'application/json'}
 
         if token:
@@ -41,5 +40,3 @@ class OfdClient:
             json={'value': code_activate, 'agentCode': '7714426164'}
         )
         return result.json()
-
-
