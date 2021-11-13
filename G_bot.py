@@ -59,17 +59,24 @@ def registrate_activate(update, context):
     date_activation = result_activation.get('to')
     if date_activation is None:
         update.message.reply_text(result_activation.get('message'))
+        return error_cancel_handler(update, context)
     else:
         date_activation_to = datetime.fromtimestamp(date_activation // 1000)
         update.message.reply_text(date_activation_to.strftime("%m/%d/%Y"))
         print(date_activation_to.strftime("%d/%m/%Y"))
-    return cancel_handler(update, context)
+        update.message.reply_text('Хочешь активировать еще одну подписку?')
+        return start_registration(update, context)
+
 
 
 def cancel_handler(update, context):
-    update.message.reply_text('Отмена. Для начала нажмите /start')
+    update.message.reply_text('Для завершения нажми /cancel или для продолжения нажмите /start')
     return ConversationHandler.END
 
+
+def error_cancel_handler(update, context):
+    update.message.reply_text('Произошла ошибка. Для завершения нажми /cancel или для продолжения нажмите /start')
+    return ConversationHandler.END
 
 def main():
     bot = Updater(settings.API_KEY, use_context=True)
